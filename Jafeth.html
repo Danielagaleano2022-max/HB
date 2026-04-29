@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏍️ Misión: Jafeth Rider 2026</title>
+<!-- Enlace de fuentes corregido -->
+<link href="https://googleapis.com" rel="stylesheet">
+<style>
+  :root {
+    --neon-blue: #00d2ff;
+    --neon-green: #00ff99;
+    --neon-red: #ff0055;
+    --glass: rgba(0, 0, 0, 0.9);
+  }
+
+  body {
+    margin: 0;
+    background: #000;
+    overflow: hidden;
+    font-family: 'Share Tech Mono', monospace;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  .road {
+    position: fixed;
+    width: 200%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(0, 210, 255, 0.1) 2px, transparent 2px), 
+        linear-gradient(90deg, rgba(0, 210, 255, 0.1) 2px, transparent 2px);
+    background-size: 60px 60px;
+    transform: perspective(400px) rotateX(60deg);
+    bottom: -20%;
+    animation: drive 1s linear infinite;
+    z-index: 1;
+    display: none;
+  }
+
+  @keyframes drive { from { background-position: 0 0; } to { background-position: 0 60px; } }
+
+  #overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: black;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .start-btn {
+    padding: 15px 30px;
+    background: transparent;
+    color: var(--neon-blue);
+    border: 2px solid var(--neon-blue);
+    font-family: 'Orbitron', sans-serif;
+    cursor: pointer;
+    box-shadow: 0 0 15px var(--neon-blue);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .hud-scanner {
+    position: relative;
+    width: 85%;
+    max-width: 360px;
+    border: 2px solid var(--neon-blue);
+    border-radius: 20px;
+    padding: 20px;
+    background: var(--glass);
+    box-shadow: 0 0 40px rgba(0, 210, 255, 0.2);
+    z-index: 10;
+    backdrop-filter: blur(10px);
+    display: none;
+  }
+
+  .photo-frame {
+    width: 100%;
+    height: 280px;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid var(--neon-green);
+    margin: 15px 0;
+    position: relative;
+    background: #000; /* Fondo negro para que no se vea vacío si la foto es pequeña */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .photo-main {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* CAMBIO CLAVE: Muestra la foto completa */
+    display: block;
+  }
+
+  .scan-line {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 4px;
+    background: var(--neon-red);
+    box-shadow: 0 0 15px var(--neon-red);
+    animation: scanning 3s ease-in-out infinite;
+    z-index: 12;
+  }
+
+  @keyframes scanning { 0%, 100% { top: 0%; } 50% { top: 98%; } }
+
+  .stat-bar-container {
+    width: 100%;
+    background: #222;
+    height: 8px;
+    border-radius: 4px;
+    margin: 5px 0 10px 0;
+    overflow: hidden;
+  }
+
+  .stat-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--neon-green);
+    box-shadow: 0 0 10px var(--neon-green);
+    transition: width 2s ease-out;
+  }
+
+  #typewriter {
+    margin-top: 20px;
+    font-size: 16px;
+    color: var(--neon-blue);
+    text-align: center;
+    text-shadow: 0 0 10px var(--neon-blue);
+    font-family: 'Orbitron', sans-serif;
+    min-height: 100px;
+    z-index: 20;
+    line-height: 1.4;
+  }
+
+  .side-msg {
+    position: absolute;
+    font-size: 7px;
+    color: var(--neon-blue);
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 2px;
+    white-space: nowrap;
+    opacity: 0.8;
+  }
+  .left-msg { left: -85px; transform: rotate(-90deg); top: 45%; }
+  .right-msg { right: -85px; transform: rotate(90deg); top: 45%; }
+
+</style>
+</head>
+<body>
+
+<div id="overlay">
+    <button class="start-btn" onclick="startSystem()">ENCENDER MOTOR</button>
+</div>
+
+<div class="road" id="road"></div>
+
+<div class="hud-scanner" id="hud">
+    <div class="side-msg left-msg">DOS RUEDAS MUEVEN EL ALMA</div>
+    <div class="side-msg right-msg">HERMANDAD Y CARRETERA</div>
+    
+    <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--neon-blue); margin-bottom:10px;">
+        <span>RIDER_LEGEND: JAFETH</span>
+        <span>MODO: CUMPLEAÑOS</span>
+    </div>
+
+    <div class="photo-frame">
+        <div class="scan-line"></div>
+        <!-- Asegúrate de que esta ruta sea accesible en el dispositivo final -->
+        <img src="Fondocumple.jpeg" class="photo-main" alt="Rider">
+    </div>
+
+    <div style="font-size: 11px; color: var(--neon-green);">
+        > NIVEL DE EXPERIENCIA
+        <div class="stat-bar-container">
+            <div id="bar1" class="stat-bar-fill"></div>
+        </div>
+        
+        > CARGA DE BENDICIONES
+        <div class="stat-bar-container">
+            <div id="bar2" class="stat-bar-fill" style="background:var(--neon-blue); box-shadow:0 0 10px var(--neon-blue);"></div>
+        </div>
+
+        > KM HACIA TUS SUEÑOS: <span id="km" style="color:white">0</span>
+    </div>
+</div>
+
+<div id="typewriter"></div>
+
+<script>
+function startSystem() {
+    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('hud').style.display = 'block';
+    document.getElementById('road').style.display = 'block';
+
+    setTimeout(() => {
+        document.getElementById('bar1').style.width = '100%';
+        document.getElementById('bar2').style.width = '100%';
+    }, 300);
+
+    let km = 0;
+    const interval = setInterval(() => {
+        if(km < 2026) {
+            km += 23;
+            if(km > 2026) km = 2026;
+            document.getElementById('km').innerText = km;
+        } else { clearInterval(interval); }
+    }, 20);
+
+    typeWriter();
+}
+
+const msg = "> INICIANDO SECUENCIA...\n¡FELIZ CUMPLEAÑOS, JAFETH!\nQUE LA VIDA TE REGALE\n RUTAS INFINITAS Y QUE\n TU MOTOR NUNCA SE DETENGA.\n¡SIGUE RODANDO CON TODO! 🏁";
+
+let i = 0;
+function typeWriter() {
+  if (i < msg.length) {
+    let char = msg.charAt(i);
+    document.getElementById("typewriter").innerHTML += char === '\n' ? '<br>' : char;
+    i++;
+    setTimeout(typeWriter, 45);
+  }
+}
+</script>
+
+</body>
+</html>
